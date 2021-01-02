@@ -11,7 +11,7 @@ async def echo(websocket, path):
         print(data)
         with open('messages.json' , 'r') as f:
             msg = json.load(f)
-
+    
         msg[data[0]] = data[1]
         with open("messages.json", "w") as f:
             json.dump(msg, f)
