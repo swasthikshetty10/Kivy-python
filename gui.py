@@ -10,36 +10,19 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scatter import Scatter 
 from kivy.uix.textinput import TextInput 
 from kivy.uix.floatlayout import FloatLayout  
+from kivy.uix.widget import Widget
+from kivy.lang import Builder
+Builder.load_file('guilayouts.kv')
+import client
+class Home(FloatLayout):
+    pass
 
-    
-# layout = BoxLayout(padding=10, orientation='vertical')
-#         self.lbl1 = Label(text="test")
-#         layout.add_widget(self.lbl1)
-#         #creating text field
-#         self.txt1 = TextInput(font_size = 30, 
-#                       size_hint_y = None, 
-#                       height = 70) 
-#         # creating button
-#         btn1 = self.send()
-#         btn1.bind(on_press=self.buttonClicked)
-#         bottomtextlayout = AnchorLayout(
-            
-#             anchor_y = 'bottom'
-#         )
-#         typeandsend = GridLayout(
-#                         cols=1, 
-#                         row_force_default=True, 
-#                                 )
-#         typeandsend.add_widget(self.txt1)
-#         typeandsend.add_widget(btn1)
-#         bottomtextlayout.add_widget(typeandsend)
-#         layout.add_widget(bottomtextlayout)
 
 
 class MyApp(App):
 # layout
     def build(self):
-        layout = BoxLayout(padding=10, orientation='vertical')
+        layout = Home()
 
         self.lbl1 = Label(text="test")
         layout.add_widget(self.lbl1)
@@ -54,10 +37,9 @@ class MyApp(App):
             anchor_y = 'bottom',
             
         )
-        typeandsend = GridLayout(
-                         cols=2, 
-                         rows = 1,
-                         row_default_height=10,
+        typeandsend = BoxLayout(
+                         orientation='horizontal',
+                         spacing=2,
                          
                                  )
         
@@ -69,9 +51,11 @@ class MyApp(App):
         return layout
 
 # button click function
-    def buttonClicked(self,btn):
-        self.lbl1.text = "You wrote " + self.txt1.text
-        print(self.lbl1.text)
+    def sendbuttonClicked(self,btn):
+        self.lbl1.text = self.txt1.text
+        client.sendtext(self.txt1.text)
+        self.txt1.text = ''
+        
     def send(self ):
         btn = Button(
             text = "send",
@@ -84,7 +68,7 @@ class MyApp(App):
             
            
         
-        btn.bind(on_press=self.buttonClicked)
+        btn.bind(on_press=self.sendbuttonClicked)
         return btn
     def callback(self, event):
         print(f'Button is is being pressed')

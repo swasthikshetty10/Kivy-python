@@ -21,9 +21,15 @@ class testapp(App):
         s = Scatter() 
         l = Label(text ="Hello !", 
                   font_size = 50) 
-        b.add_widget(text)
-        
+        b.add_widget(self.send())
+        btnlayout = AnchorLayout(
+            
+            anchor_y = 'bottom',
+            
+        )
         text.bind(text = l.setter('text')) 
+        btnlayout.add_widget(text)
+        b.add_widget(btnlayout)
         return b
 
     def send(self):
